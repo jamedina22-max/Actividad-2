@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick and Morty System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="toast-container" class="toast-container"></div>
+
+    <section id="auth-view" class="auth-view">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="portal-badge">
+                    <span class="portal-dot"></span>
+                    <span>RICK & MORTY SYSTEM</span>
+                </div>
+                <h1 id="auth-title">Iniciar Sesión</h1>
+                <p id="auth-subtitle">Ingresa tus credenciales para acceder al sistema</p>
+            </div>
+
+            <form id="form-login" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Correo Electrónico</label>
+                    <input type="email" id="login-email" required placeholder="usuario@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                <div class="auth-footer-links">
+                    <a href="#" id="link-to-recover">¿Olvidaste tu contraseña?</a>
+                    <a href="#" id="link-to-register">Crear una cuenta nueva</a>
+                </div>
+            </form>
+
+            <form id="form-register" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-name">Nombre Completo</label>
+                    <input type="text" id="reg-name" required placeholder="Científico Rick">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Correo Electrónico</label>
+                    <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" required placeholder="Mínimo 6 caracteres">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                <div class="auth-footer-links">
+                    <a href="#" id="link-reg-to-login">¿Ya tienes cuenta? Inicia Sesión</a>
+                </div>
+            </form>
+
+            <form id="form-recover" class="auth-form">
+                <div class="form-group">
+                    <label for="recover-email">Correo Registrado</label>
+                    <input type="email" id="recover-email" required placeholder="usuario@ejemplo.com">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Enviar Enlace de Recuperación</button>
+                <div class="auth-footer-links">
+                    <a href="#" id="link-rec-to-login">Volver al Inicio de Sesión</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div id="main-app" class="main-app hidden">
+        <header class="navbar">
+            <div class="nav-brand">
+                <div class="brand-logo">C-137</div>
+                <div class="brand-info">
+                    <span class="brand-title">Rick & Morty System</span>
+                    <span class="brand-sub">WEB SYSTEM</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-target="characters-section">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Personajes</span>
+                </button>
+                <button class="nav-btn" data-target="episodes-section">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                    <span>Episodios</span>
+                </button>
+            </nav>
+
+            <div class="nav-controls">
+                <div id="network-badge" class="network-badge online">
+                    <span class="net-dot"></span>
+                    <span id="net-text">En línea</span>
+                </div>
+                <button id="theme-toggle" class="icon-btn" title="Cambiar Tema">
+                    <svg id="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="theme-icon-light" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <div class="user-profile">
+                    <span id="user-display-name">Usuario</span>
+                    <button id="btn-logout" class="icon-btn danger" title="Cerrar Sesión">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="content-container">
+            <section id="characters-section" class="view-section active">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de Personajes</h2>
+                        <p>Explora, busca, ordena y modifica los personajes de la serie</p>
+                    </div>
+                    <div class="stats-card">
+                        <span class="stats-value" id="char-total-count">0</span>
+                        <span class="stats-label">Total Personajes</span>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-characters" placeholder="Buscar personaje por nombre en tiempo real...">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-characters">
+                        <thead>
+                            <tr>
+                                <th data-sort="id" class="sortable">ID <span class="sort-icon">↕</span></th>
+                                <th data-sort="name" class="sortable">Nombre <span class="sort-icon">↕</span></th>
+                                <th data-sort="species" class="sortable">Especie <span class="sort-icon">↕</span></th>
+                                <th data-sort="gender" class="sortable">Género <span class="sort-icon">↕</span></th>
+                                <th data-sort="type" class="sortable">Tipo <span class="sort-icon">↕</span></th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-characters">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <span id="char-page-info">Página 1</span>
+                    <div class="pagination-actions">
+                        <button id="btn-char-prev" class="btn btn-secondary btn-sm" disabled>Anterior</button>
+                        <button id="btn-char-next" class="btn btn-secondary btn-sm">Siguiente</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="episodes-section" class="view-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de Episodios</h2>
+                        <p>Explora, busca, ordena y edita los episodios emitidos</p>
+                    </div>
+                    <div class="stats-card">
+                        <span class="stats-value" id="ep-total-count">0</span>
+                        <span class="stats-label">Total Episodios</span>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-episodes" placeholder="Buscar episodio por nombre en tiempo real...">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-episodes">
+                        <thead>
+                            <tr>
+                                <th data-sort="id" class="sortable">ID <span class="sort-icon">↕</span></th>
+                                <th data-sort="name" class="sortable">Nombre <span class="sort-icon">↕</span></th>
+                                <th data-sort="air_date" class="sortable">Fecha de Emisión <span class="sort-icon">↕</span></th>
+                                <th data-sort="episode" class="sortable">Código Episodio <span class="sort-icon">↕</span></th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-episodes">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <span id="ep-page-info">Página 1</span>
+                    <div class="pagination-actions">
+                        <button id="btn-ep-prev" class="btn btn-secondary btn-sm" disabled>Anterior</button>
+                        <button id="btn-ep-next" class="btn btn-secondary btn-sm">Siguiente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-char-detail" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Detalle del Personaje</h3>
+                <button class="modal-close" data-close="modal-char-detail">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="char-detail-layout">
+                    <div class="char-avatar-container">
+                        <img id="detail-char-img" src="" alt="Avatar">
+                    </div>
+                    <div class="char-info-grid">
+                        <div class="info-item">
+                            <label>ID</label>
+                            <span id="detail-char-id"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Nombre</label>
+                            <span id="detail-char-name" class="highlight"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Estado</label>
+                            <span id="detail-char-status" class="badge"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Especie</label>
+                            <span id="detail-char-species"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Género</label>
+                            <span id="detail-char-gender"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Tipo</label>
+                            <span id="detail-char-type"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Origen</label>
+                            <span id="detail-char-origin"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Ubicación Actual</label>
+                            <span id="detail-char-location"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-open-edit-char" class="btn btn-primary">Editar Personaje</button>
+                <button class="btn btn-secondary" data-close="modal-char-detail">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-char-edit" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Personaje</h3>
+                <button class="modal-close" data-close="modal-char-edit">&times;</button>
+            </div>
+            <form id="form-edit-char">
+                <div class="modal-body">
+                    <input type="hidden" id="edit-char-id">
+                    <div class="form-group">
+                        <label for="edit-char-name">Nombre</label>
+                        <input type="text" id="edit-char-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-char-species">Especie</label>
+                        <input type="text" id="edit-char-species" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-char-gender">Género</label>
+                        <select id="edit-char-gender" required>
+                            <option value="Male">Masculino (Male)</option>
+                            <option value="Female">Femenino (Female)</option>
+                            <option value="Genderless">Sin Género (Genderless)</option>
+                            <option value="unknown">Desconocido (unknown)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-char-type">Tipo</label>
+                        <input type="text" id="edit-char-type">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" data-close="modal-char-edit">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-ep-detail" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Ficha Técnica del Episodio</h3>
+                <button class="modal-close" data-close="modal-ep-detail">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="char-info-grid">
+                    <div class="info-item">
+                        <label>ID</label>
+                        <span id="detail-ep-id"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Nombre del Episodio</label>
+                        <span id="detail-ep-name" class="highlight"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Fecha de Emisión</label>
+                        <span id="detail-ep-airdate"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Código Episodio</label>
+                        <span id="detail-ep-code" class="badge"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Personajes Participantes</label>
+                        <span id="detail-ep-charcount"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-open-edit-ep" class="btn btn-primary">Editar Episodio</button>
+                <button class="btn btn-secondary" data-close="modal-ep-detail">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-ep-edit" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Episodio</h3>
+                <button class="modal-close" data-close="modal-ep-edit">&times;</button>
+            </div>
+            <form id="form-edit-ep">
+                <div class="modal-body">
+                    <input type="hidden" id="edit-ep-id">
+                    <div class="form-group">
+                        <label for="edit-ep-name">Nombre</label>
+                        <input type="text" id="edit-ep-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-ep-airdate">Fecha de Emisión</label>
+                        <input type="text" id="edit-ep-airdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-ep-code">Código de Episodio</label>
+                        <input type="text" id="edit-ep-code" required placeholder="Ej. S01E01">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" data-close="modal-ep-edit">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
